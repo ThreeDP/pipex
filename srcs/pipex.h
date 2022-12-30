@@ -32,13 +32,25 @@
 
 // funcs open, unlink
 # include <fcntl.h>
+# include <stddef.h>
+
+//extern char **environ;
 
 // error messages 
 # define ERR_CMD "command '%s' not found\n"
 # define ERR_AGRS "invalid number of arguments\n"
-# define ERR_INFILE "No such file or directory\n"
+# define ERR_PIPE "No such pipe\n"
+# define ERR_IFILE "No such input file or directory\n"
+# define ERR_OFILE "No such output file or directory\n"
 
-typedef 
+typedef struct s_pipex
+{
+    pid_t   pid1;
+    pid_t   pid2;
+    int     pid_fd[2];
+    int     infile;
+    int     outfile;
+}               t_pipex;
 
 // error functions
 int         message(char *err);
