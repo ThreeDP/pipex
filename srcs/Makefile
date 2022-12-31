@@ -23,24 +23,28 @@ L_GREENB		=			\033[1;32m
 FLAGS			=			-Wall -Wextra -Werror
 ################ SOURCE		##################
 NAME			=			pipex
-HEADERS			=			pipex.h minilibft.h
-SRCS			=			pipex.c err.c minilibft.c
-OBJS			=			$(SRCS:.C=.O)
+DMLIB			=			./libft/
+HEADERS			=			pipex.h $(addprefix $(DMLIB), minilibft.h)
+LSRCS			=			ft_calloc.c ft_memset.c ft_split.c ft_strjoin.c\
+							ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
+							ft_strncmp.c ft_strndup.c
+SRCS			=			pipex.c err.c 
+OBJS			=			$(addprefix $(DMLIB), $(LSRCS:.c=.o)) $(SRCS:.c=.o)
 
 all:	$(NAME)
 
 %.o: %.c $(HEADERS)
-	$(CC)	$(FLAGS) -c $< -o $@
+	$(CC)	 -c $< -o $@
 
 $(NAME):	$(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) 	$(OBJS) -o $(NAME)
 	@echo	"$(L_GREENB)[**** pipex created ****]$(L_WHITE)"
 
 clean:
-	@rm			-f *.o
+	@rm			-f $(OBJS)
 	@echo	"$(L_GREENB)[**** objects removed ****]$(L_WHITE)"
 
-fclean:
+fclean: clean
 	@rm			-f $(NAME)
 	@echo	"$(L_GREENB)[**** exec removed ****]$(L_WHITE)"
 
