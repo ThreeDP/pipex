@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "minilibft.h"
+#include "libft/minilibft.h"
 
 int message(char *err)
 {
