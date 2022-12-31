@@ -50,6 +50,9 @@ typedef struct s_pipex
     int     pid_fd[2];
     int     infile;
     int     outfile;
+    char    *prog;
+    char    **paths;
+    char    **cmds;
 }               t_pipex;
 
 // error functions
