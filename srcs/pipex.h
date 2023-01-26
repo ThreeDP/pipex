@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:46:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2022/12/29 17:46:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:23:35 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ typedef struct s_pipex
 
 // error functions
 int         message(char *err);
-void        merr(char *err);
+void        merr(int err);
 size_t	    ft_strlen(const char *str);
+void	handle_cmd(char *cmd);
+
+void	clear_pipex(t_pipex *p);
 
 #endif

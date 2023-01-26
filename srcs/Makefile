@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 15:00:16 by dapaulin          #+#    #+#              #
-#    Updated: 2022/12/29 15:00:16 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/01/25 19:16:05 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all:	$(NAME)
 	$(CC)	 -c $< -o $@
 
 $(NAME):	$(OBJS)
-	$(CC) 	$(OBJS) -o $(NAME)
+	$(CC) 	-g $(OBJS) -o $(NAME)
 	@echo	"$(L_GREENB)[**** pipex created ****]$(L_WHITE)"
 
 clean:
