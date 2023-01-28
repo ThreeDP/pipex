@@ -6,11 +6,12 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 15:20:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/01/25 20:04:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:00:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <errno.h>
 #include "libft/minilibft.h"
 
 char    **split_paths(char **env)
@@ -49,13 +50,15 @@ void    start_pipex(t_pipex *p, int ac, char **av, char **env)
 
 void	setup_path_cmd(t_pipex *p, char *cmd)
 {
+	int		i;
 	char	*tmp;
 
+	i = 0;
 	handle_cmd(cmd);
 	p->cmds = ft_split(cmd, 7);
-	while (*p->paths)
+	while ((p->paths)[i])
 	{
-		tmp = ft_strjoin(*p->paths, "/");
+		tmp = ft_strjoin((p->paths)[i], "/");
 		p->prog = ft_strjoin(tmp, p->cmds[0]);
 		if (tmp)
 			free(tmp);
@@ -63,13 +66,22 @@ void	setup_path_cmd(t_pipex *p, char *cmd)
 			return ;
 		if (p->prog)
 			free(p->prog);
-		p->paths++;
+		i++;
 	}
 	p->prog = NULL;
+	i = 0;
+	while((p->cmds)[i])
+		free((p->cmds)[i++]);
+	clear_pipex(p);
+	perror("ERROR");
+	exit(2);
 }
 
 int	first_pid(t_pipex *p, char **env, char *cmd)
 {
+	int i;
+
+	i = 0;
 	if (p->pid1 < 0)
 	{
 		clear_pipex(p);
@@ -84,6 +96,9 @@ int	first_pid(t_pipex *p, char **env, char *cmd)
 		close(p->pid_fd[0]);
 		if (execve(p->prog, p->cmds, env) < 0)
 		{
+			i = 0;
+			while((p->cmds)[i])
+				free((p->cmds)[i++]);
 			clear_pipex(p);
 			perror("ERROR");
 			exit(24);
@@ -94,6 +109,9 @@ int	first_pid(t_pipex *p, char **env, char *cmd)
 
 int	second_pid(t_pipex *p, char **env, char *cmd)
 {
+	int i;
+
+	i = 0;
 	if (0 > p->pid2)
 	{
 		clear_pipex(p);
@@ -108,6 +126,9 @@ int	second_pid(t_pipex *p, char **env, char *cmd)
 		close(p->pid_fd[1]);
 		if (execve(p->prog, p->cmds, env) < 0)
 		{
+			i = 0;
+			while((p->cmds)[i])
+				free((p->cmds)[i++]);
 			clear_pipex(p);
 			perror("ERROR");
 			exit(24);
@@ -123,11 +144,8 @@ void	clear_pipex(t_pipex *p)
 	if (p->prog)
 		free(p->prog);
 	i = 0;
-	while (p->paths[i])
-	{
-		free(p->paths[i]);
-		i++;
-	}
+	while ((p->paths)[i])
+		free((p->paths)[i++]);
 	if (p->paths)
 		free(p->paths);
 	if (p->cmds)
