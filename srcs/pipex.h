@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:46:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/01/25 19:23:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/03 00:51:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,30 @@
 
 typedef struct s_pipex
 {
-    pid_t   pid1;
-    pid_t   pid2;
-    int     pid_fd[2];
-    int     infile;
-    int     outfile;
-    char    *prog;
-    char    **paths;
-    char    **cmds;
+	pid_t   pid1;
+	pid_t   pid2;
+	int     pid_fd[2];
+	int     infile;
+	int     outfile;
+	char    *prog;
+	char    **paths;
+	char    **cmds;
 }               t_pipex;
 
 // error functions
 int         message(char *err);
 void        merr(int err);
 size_t	    ft_strlen(const char *str);
-void	handle_cmd(char *cmd);
 
-void	clear_pipex(t_pipex *p);
+// Utils
+char		**split_paths(char **env);
+void		start_pipex(t_pipex *p, int ac, char **av, char **env);
+void		clear_pipex(t_pipex *p);
+void		handle_cmd(char *cmd);
+void		setup_path_cmd(t_pipex *p, char *cmd);
+void		remove_symbols(char **cmds);
 
+// Pids
+int			first_pid(t_pipex *p, char **env, char *cmd);
+int			second_pid(t_pipex *p, char **env, char *cmd);
 #endif

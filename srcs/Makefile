@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 15:00:16 by dapaulin          #+#    #+#              #
-#    Updated: 2023/01/25 19:16:05 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/01/31 00:38:33 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ HEADERS			=			pipex.h $(addprefix $(DMLIB), minilibft.h)
 LSRCS			=			ft_calloc.c ft_memset.c ft_split.c ft_strjoin.c\
 							ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
 							ft_strncmp.c ft_strndup.c
-SRCS			=			pipex.c err.c 
+SRCS			=			pipex.c pids.c utils.c err.c 
 OBJS			=			$(addprefix $(DMLIB), $(LSRCS:.c=.o)) $(SRCS:.c=.o)
 
 all:	$(NAME)
