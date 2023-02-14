@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 15:57:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 18:27:38 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:11:43 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	merr(int err)
 
 void	print_merr(t_pipex *p, int code)
 {
+	close_fds(p);
 	if (p)
 		free(p);
 	merr(code);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 00:36:38 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 18:34:27 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:28:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	clear_pipex(t_pipex *p)
 {
 	int	i;
 
+	close_fds(p);
 	if (p->prog)
 		free(p->prog);
 	i = 0;

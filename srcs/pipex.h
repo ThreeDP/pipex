@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:46:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 18:27:55 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:56:32 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void		remove_symbols(char **cmds);
 void		check_quotes(char *cmd, int *i, int quotes);
 void		handle_cmd(char *cmd);
 // Pids
+void		close_fds(t_pipex *p);
 void		run_execve(t_pipex *p, char **env);
 int			first_pid(t_pipex *p, char **env, char *cmd);
 int			second_pid(t_pipex *p, char **env, char *cmd);
