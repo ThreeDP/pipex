@@ -3,19 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   pids.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 00:37:54 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 16:20:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:30:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft/minilibft.h"
 
+void	run_execve(t_pipex *p, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (execve(p->prog, p->cmds, env) < 0)
+		err_msg_full(p, 24);
+	while ((p->cmds)[i])
+		free((p->cmds)[i++]);
+}
+
 int	first_pid(t_pipex *p, char **env, char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (p->pid1 < 0)
@@ -30,22 +41,16 @@ int	first_pid(t_pipex *p, char **env, char *cmd)
 		dup2(p->pid_fd[1], STDOUT_FILENO);
 		close(p->pid_fd[1]);
 		close(p->pid_fd[0]);
-		if (execve(p->prog, p->cmds, env) < 0)
-		{
-			i = 0;
-			while((p->cmds)[i])
-				free((p->cmds)[i++]);
-			clear_pipex(p);
-			perror("ERROR");
-			exit(24);
-		}
+		run_execve(p, env);
+		while ((p->cmds)[i])
+			free((p->cmds)[i++]);
 	}
 	return (0);
 }
 
 int	second_pid(t_pipex *p, char **env, char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (0 > p->pid2)
@@ -61,15 +66,7 @@ int	second_pid(t_pipex *p, char **env, char *cmd)
 		dup2(p->outfile, STDOUT_FILENO);
 		close(p->pid_fd[0]);
 		close(p->pid_fd[1]);
-		if (execve(p->prog, p->cmds, env) < 0)
-		{
-			i = 0;
-			while((p->cmds)[i])
-				free((p->cmds)[i++]);
-			clear_pipex(p);
-			perror("ERROR");
-			exit(24);
-		}
+		run_execve(p, env);
 	}
 	return (0);
 }

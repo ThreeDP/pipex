@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:46:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/13 22:15:28 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:27:55 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@
 //extern char **environ;
 
 // chars
-#define SIMPLEQUOTES 39
-#define QUOTES 34
-#define BACKSPACE 92
-#define NOPRINT 7
+# define SIMPLEQUOTES 39
+# define QUOTES 34
+# define BACKSPACE 92
+# define NOPRINT 7
 
 // error messages 
 # define ERR_CMD "command '%s' not found\n"
@@ -51,30 +51,35 @@
 
 typedef struct s_pipex
 {
-	pid_t   pid1;
-	pid_t   pid2;
-	int     pid_fd[2];
-	int     infile;
-	int     outfile;
-	char    *prog;
-	char    **paths;
-	char    **cmds;
-}               t_pipex;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		pid_fd[2];
+	int		infile;
+	int		outfile;
+	char	*prog;
+	char	**paths;
+	char	**cmds;
+}			t_pipex;
 
-// error functions
-int         message(char *err);
-void        merr(int err);
-size_t	    ft_strlen(const char *str);
-
+// Error functions
+int			message(char *err);
+void		merr_msg(char *err);
+void		merr(int err);
+void		print_merr(t_pipex *p, int code);
+void		err_msg_full(t_pipex *p, int code);
 // Utils
 char		**split_paths(char **env);
 void		start_pipex(t_pipex *p, int ac, char **av, char **env);
 void		clear_pipex(t_pipex *p);
-void		handle_cmd(char *cmd);
 void		setup_path_cmd(t_pipex *p, char *cmd);
+// Utils 2
+int			count_quotes(char *cmd);
+void		make_clen_cmd(char *cmd, char *str);
 void		remove_symbols(char **cmds);
-
+void		check_quotes(char *cmd, int *i, int quotes);
+void		handle_cmd(char *cmd);
 // Pids
+void		run_execve(t_pipex *p, char **env);
 int			first_pid(t_pipex *p, char **env, char *cmd);
 int			second_pid(t_pipex *p, char **env, char *cmd);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:00:12 by dapaulin          #+#    #+#             */
-/*   Updated: 2022/10/08 19:31:24 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:13:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void	*ptr;
 	size_t	len;
 
+	ptr = NULL;
 	if (nmemb >= ~(1 << 31) || size >= ~(1 << 31) || !nmemb || !size)
 		return (0);
 	len = nmemb * size;
