@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 00:36:38 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/03 01:28:05 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:04:0NOPRINT by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft/minilibft.h"
+#include <stdio.h>
 
 char    **split_paths(char **env)
 {
@@ -76,15 +77,15 @@ void	remove_symbols(char **cmds)
 	{
 		while ((*cmds)[i])
 		{
-			if (((*cmds)[i] == 39 || (*cmds)[i] == 34) && (*cmds)[i - 1] != 92)
-				(*cmds)[i] = 7;
+			if (((*cmds)[i] == SIMPLEQUOTES || (*cmds)[i] == QUOTES) && (*cmds)[i - 1] != BACKSPACE)
+				(*cmds)[i] = NOPRINT;
 			i++;
 		}
 		i = 0;
 		j = 0;
 		while ((*cmds)[i])
 		{
-			if ((*cmds)[i] == 7)
+			if ((*cmds)[i] == NOPRINT)
 			{
 				j = i;
 				while ((*cmds)[j])
@@ -106,7 +107,7 @@ void	setup_path_cmd(t_pipex *p, char *cmd)
 
 	i = 0;
 	handle_cmd(cmd);
-	p->cmds = ft_split(cmd, 7);
+	p->cmds = ft_split(cmd, NOPRINT);
 	remove_symbols(p->cmds);
 	while ((p->paths)[i])
 	{
@@ -129,6 +130,25 @@ void	setup_path_cmd(t_pipex *p, char *cmd)
 	exit(2);
 }
 
+void	check_quotes(char *cmd, int *i, int quotes)
+{
+	char	*sq;
+
+	sq = NULL;
+	if (cmd[*i] == quotes && cmd[*i - 1] != BACKSPACE)
+	{
+		*i += 1;
+		sq = ft_strchr(&cmd[*i], quotes);
+		while (sq && (sq - &cmd[*i]) - 1 == BACKSPACE)
+		{
+			*i += (sq - &cmd[*i]) + 1;
+			sq = ft_strchr(&cmd[*i], quotes);
+		}
+		if (sq)
+			*i += (sq - &cmd[*i]) + 1;
+	}
+}
+
 void	handle_cmd(char *cmd)
 {
 	int		i;
@@ -138,26 +158,10 @@ void	handle_cmd(char *cmd)
 	sq = NULL;
 	while (cmd[i])
 	{
-		if (cmd[i] == 39 && cmd[i - 1] != 92)
-		{
-			sq = ft_strchr(&cmd[++i], 39);
-			while (sq && (sq - &cmd[i]) - 1 == 92)
-			{
-				i += (sq - &cmd[i]) + 1;
-				sq = ft_strchr(&cmd[i], 39);
-			}
-		}
-		if (cmd[i] == 34 && cmd[i - 1] != 92)
-		{
-			sq = ft_strchr(&cmd[++i], 34);
-			while (sq && (sq - &cmd[i]) - 1 == 92)
-			{
-				i += (sq - &cmd[i]) + 1;
-				sq = ft_strchr(&cmd[i], 34);
-			}
-		}
+		check_quotes(cmd, &i, SIMPLEQUOTES);
+		check_quotes(cmd, &i, QUOTES);
 		if (cmd[i] == ' ')
-			cmd[i] = 7;
+			cmd[i] = NOPRINT;
 		i++;
 	}
 }

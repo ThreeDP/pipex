@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:46:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/03 00:51:50 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:15:28 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # include <stddef.h>
 
 //extern char **environ;
+
+// chars
+#define SIMPLEQUOTES 39
+#define QUOTES 34
+#define BACKSPACE 92
+#define NOPRINT 7
 
 // error messages 
 # define ERR_CMD "command '%s' not found\n"
