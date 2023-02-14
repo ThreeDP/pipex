@@ -39,6 +39,7 @@ void    start_pipex(t_pipex *p, int ac, char **av, char **env)
 	}
 	if (pipe(p->pid_fd) < 0)
 	{
+		printf("\ntest\n");
 		if (p)
 			free(p);
 		merr(24);
@@ -69,33 +70,34 @@ void	remove_symbols(char **cmds)
 {
 	int		i;
 	int		j;
-	char	*sq;
+	int		quotes;
+	int		c;
+	char	*string;
 
 	i = 0;
-	sq = NULL;
+	string = NULL;
 	while (*cmds)
 	{
 		while ((*cmds)[i])
 		{
 			if (((*cmds)[i] == SIMPLEQUOTES || (*cmds)[i] == QUOTES) && (*cmds)[i - 1] != BACKSPACE)
-				(*cmds)[i] = NOPRINT;
+				quotes++;
+			else
+				c++;
 			i++;
 		}
+		string = ft_calloc(sizeof(char), c + 1);
 		i = 0;
 		j = 0;
 		while ((*cmds)[i])
 		{
-			if ((*cmds)[i] == NOPRINT)
-			{
-				j = i;
-				while ((*cmds)[j])
-				{
-					(*cmds)[j] = (*cmds)[j + 1];
-					j++;
-				}
-			}
+			if (!(((*cmds)[i] == SIMPLEQUOTES || (*cmds)[i] == QUOTES) && (*cmds)[i - 1] != BACKSPACE))
+				string[j++] = (*cmds)[i];
 			i++;
 		}
+		if (*cmds)
+			free(*cmds);
+		*cmds = string;
 		cmds++;
 	}
 }

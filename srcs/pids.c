@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pids.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 00:37:54 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/01/31 19:16:26 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:20:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	second_pid(t_pipex *p, char **env, char *cmd)
 	{
 		setup_path_cmd(p, cmd);
 		i = 0;
-		while (p->cmds[i])
-			printf("\n>%s<\n", p->cmds[i++]);
 		dup2(p->pid_fd[0], STDIN_FILENO);
 		dup2(p->outfile, STDOUT_FILENO);
 		close(p->pid_fd[0]);
