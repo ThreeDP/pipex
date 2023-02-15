@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 15:20:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 19:10:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:33:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	p->pid2 = fork();
 	second_pid(p, environ, argv[3]);
 	close_fds(p);
-	waitpid(p->pid1, &status, 0);
+	waitpid(-1, &status, 0);
 	waitpid(p->pid2, &status, 0);
 	clear_pipex(p);
 	return (WEXITSTATUS(status));

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 00:36:38 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/02/14 19:28:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:30:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	start_pipex(t_pipex *p, int ac, char **av, char **env)
 {
 	p->infile = open(av[1], O_RDONLY);
 	if (p->infile < 0)
-		print_merr(p, 2);
+		perror("ERROR");
 	p->outfile = open(av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 00644);
 	if (p->outfile < 0)
-		print_merr(p, 2);
+		perror("ERROR");
 	if (pipe(p->pid_fd) < 0)
 		print_merr(p, 24);
 	p->paths = split_paths(env);
